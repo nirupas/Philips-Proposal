@@ -1,0 +1,553 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--navy:#0A0F1E;--blue:#1A3CFF;--blue-mid:#4D6FFF;--blue-lt:#E8EDFF;
+--teal:#00C6A0;--teal-lt:#D0FAF2;--coral:#FF5C4D;--coral-lt:#FFF0EE;
+--amber:#FFB800;--amber-lt:#FFF8E0;--purple:#7B5CF0;--purple-lt:#F0ECFF;
+--white:#fff;--surface:#F7F8FC;--ink:#0A0F1E;--ink2:#3D4566;--ink3:#8890B0;
+--border:rgba(26,60,255,0.12)
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.sec{display:none}.sec.on{display:block}
+
+.hero{background:var(--navy);border-radius:16px;overflow:hidden;margin-bottom:1.5rem}
+.hero-img{width:100%;height:220px;object-fit:cover;display:block;opacity:.45}
+.hero-body{padding:2rem 2rem 1.75rem}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:0.5px solid rgba(255,255,255,.15);border-radius:20px;padding:.28rem .8rem;font-size:10px;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
+.htdot{width:6px;height:6px;border-radius:50%;background:#00C6A0}
+.hero-h{font-size:1.85rem;font-weight:500;color:#fff;line-height:1.18;margin-bottom:.7rem}
+.hero-h span{color:#4D6FFF}
+.hero-sub{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:400px;margin-bottom:1.4rem}
+.hero-logos{display:flex;gap:.65rem;align-items:center}
+.lp{background:rgba(255,255,255,.1);border:0.5px solid rgba(255,255,255,.18);border-radius:7px;padding:.32rem .8rem;font-size:10px;font-weight:500;color:#fff;letter-spacing:1px}
+.lp-x{color:rgba(255,255,255,.3);font-size:.85rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:1.25rem}
+.hs{background:rgba(255,255,255,.06);border:0.5px solid rgba(255,255,255,.1);border-radius:10px;padding:.65rem .75rem}
+.hs-val{font-size:1.2rem;font-weight:500;color:#00C6A0}
+.hs-lbl{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.1rem;letter-spacing:.4px}
+
+.nav-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.5rem}
+.nb{border:0.5px solid rgba(26,60,255,.2);border-radius:20px;padding:.35rem .85rem;font-size:.72rem;cursor:pointer;color:var(--ink2);background:var(--white);transition:all .16s;white-space:nowrap}
+.nb:hover{border-color:var(--blue);color:var(--blue)}
+.nb.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.eyebrow{font-size:.68rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:.45rem}
+.sec-h{font-size:1.2rem;font-weight:500;color:var(--ink);margin-bottom:.3rem}
+.sec-p{font-size:.82rem;color:var(--ink2);line-height:1.7;margin-bottom:1.4rem;max-width:540px}
+
+.img-card{border-radius:14px;overflow:hidden;position:relative;margin-bottom:1.4rem}
+.img-card img{width:100%;height:200px;object-fit:cover;display:block}
+.img-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(10,15,30,.85));padding:1rem 1.1rem .9rem}
+.img-overlay h3{font-size:.95rem;font-weight:500;color:#fff;margin-bottom:.2rem}
+.img-overlay p{font-size:.75rem;color:rgba(255,255,255,.7);line-height:1.45}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.4rem}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.4rem}
+
+.stat{border-radius:12px;padding:.85rem .9rem}
+.stat-lbl{font-size:.65rem;font-weight:500;letter-spacing:.8px;text-transform:uppercase;margin-bottom:.2rem;opacity:.75}
+.stat-val{font-size:1.4rem;font-weight:500}
+.stat-sub{font-size:.65rem;margin-top:.12rem;opacity:.6}
+.s-coral{background:var(--coral-lt)}.s-coral .stat-lbl,.s-coral .stat-sub{color:#712B13}.s-coral .stat-val{color:var(--coral)}
+.s-blue{background:var(--blue-lt)}.s-blue .stat-lbl,.s-blue .stat-sub{color:#0C447C}.s-blue .stat-val{color:var(--blue)}
+.s-amber{background:var(--amber-lt)}.s-amber .stat-lbl,.s-amber .stat-sub{color:#633806}.s-amber .stat-val{color:#854F0B}
+.s-teal{background:var(--teal-lt)}.s-teal .stat-lbl,.s-teal .stat-sub{color:#085041}.s-teal .stat-val{color:#0F6E56}
+.s-purple{background:var(--purple-lt)}.s-purple .stat-lbl,.s-purple .stat-sub{color:#3C3489}.s-purple .stat-val{color:var(--purple)}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-bottom:1.4rem}
+
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.4rem}
+.photo-cell{border-radius:12px;overflow:hidden;position:relative}
+.photo-cell img{width:100%;height:130px;object-fit:cover;display:block}
+.photo-cell .photo-label{position:absolute;bottom:0;left:0;right:0;padding:.5rem .7rem;background:rgba(10,15,30,.75)}
+.photo-label span{font-size:.72rem;font-weight:500;color:#fff}
+.photo-label small{display:block;font-size:.65rem;color:rgba(255,255,255,.6);margin-top:.05rem}
+
+.card{background:var(--white);border:0.5px solid var(--border);border-radius:14px;padding:1.1rem 1rem;margin-bottom:10px}
+.card-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:.65rem}
+.ci-blue{background:var(--blue-lt);color:var(--blue)}
+.ci-teal{background:var(--teal-lt);color:#0F6E56}
+.ci-coral{background:var(--coral-lt);color:var(--coral)}
+.ci-purple{background:var(--purple-lt);color:var(--purple)}
+.card-title{font-size:.83rem;font-weight:500;color:var(--ink);margin-bottom:.28rem}
+.card-body{font-size:.74rem;color:var(--ink2);line-height:1.55}
+.card-stat{font-size:.85rem;font-weight:500;color:var(--blue);margin-top:.45rem}
+
+.gap-row{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;background:var(--surface);border-radius:14px;overflow:hidden;margin-bottom:1.4rem}
+.gap-col{padding:1rem}
+.gap-col h4{font-size:.75rem;font-weight:500;margin-bottom:.5rem}
+.gap-col li{font-size:.7rem;line-height:1.5;padding:.18rem 0 .18rem .9rem;position:relative;list-style:none}
+.gap-col li::before{position:absolute;left:0;font-size:.7rem}
+.gap-bad{background:#FFF0EE}.gap-bad h4{color:#712B13}.gap-bad li{color:#993C1D}.gap-bad li::before{content:'✗';color:var(--coral)}
+.gap-mid{display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--blue);background:var(--blue-lt)}
+.gap-good{background:#E0FAF5}.gap-good h4{color:#085041}.gap-good li{color:#0F6E56}.gap-good li::before{content:'✓';color:var(--teal)}
+
+.map-wrap{background:var(--surface);border-radius:14px;padding:.85rem;margin-bottom:.85rem}
+.map-tabs{display:flex;gap:5px;margin-bottom:.8rem}
+.mtab{border:0.5px solid var(--border);border-radius:20px;padding:.28rem .7rem;font-size:.7rem;cursor:pointer;color:var(--ink2);background:var(--white)}
+.mtab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.hs-panel{background:var(--white);border:0.5px solid var(--border);border-radius:12px;padding:.85rem 1rem;margin-top:.65rem;min-height:65px}
+.hs-name{font-size:.85rem;font-weight:500;color:var(--ink);margin-bottom:.18rem}
+.hs-body{font-size:.72rem;color:var(--ink2);line-height:1.5}
+.hs-result{font-size:.77rem;font-weight:500;color:#0F6E56;margin-top:.35rem}
+.leg{display:flex;gap:.85rem;flex-wrap:wrap;margin-top:.6rem}
+.leg-i{display:flex;align-items:center;gap:4px;font-size:.67rem;color:var(--ink2)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+
+.wt-scene{border-radius:14px;padding:1.1rem;margin-bottom:1.1rem;display:flex;gap:1rem;align-items:center;min-height:100px;transition:background .25s}
+.scene-icon{width:58px;height:58px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.scene-text h4{font-size:.88rem;font-weight:500;margin-bottom:.25rem}
+.scene-text p{font-size:.74rem;line-height:1.55;margin-bottom:.38rem}
+.scene-badge{font-size:.65rem;font-weight:500;border-radius:4px;padding:.12rem .45rem;display:inline-block}
+
+.wts{display:flex;flex-direction:column;gap:0;margin-bottom:1.4rem}
+.wt{display:flex;gap:.8rem;padding:.72rem 0;border-bottom:0.5px solid rgba(26,60,255,.07);cursor:pointer;align-items:flex-start}
+.wt:last-child{border-bottom:none}
+.wt-num{width:26px;height:26px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:500;color:var(--ink3);flex-shrink:0;transition:all .18s}
+.wt.on .wt-num{background:var(--blue);color:#fff}
+.wt-txt{flex:1}
+.wt-title{font-size:.8rem;font-weight:500;color:var(--ink);margin-bottom:.1rem}
+.wt-detail{font-size:.7rem;color:var(--ink2);line-height:1.5;max-height:0;overflow:hidden;transition:max-height .25s ease}
+.wt.on .wt-detail{max-height:70px}
+
+.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.4rem}
+.photo-strip-cell{border-radius:10px;overflow:hidden}
+.photo-strip-cell img{width:100%;height:90px;object-fit:cover;display:block}
+
+.ptabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.8rem}
+.ptab{border:0.5px solid var(--border);border-radius:20px;padding:.28rem .75rem;font-size:.7rem;cursor:pointer;color:var(--ink2);background:var(--white)}
+.ptab.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+.pbody{background:var(--white);border:0.5px solid var(--border);border-radius:14px;padding:1.1rem;margin-bottom:1.4rem}
+.pbody h4{font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:.32rem}
+.pbody p{font-size:.76rem;color:var(--ink2);line-height:1.65;margin-bottom:.65rem}
+.tag{display:inline-block;background:var(--blue-lt);color:#0C447C;font-size:.65rem;border-radius:4px;padding:.12rem .42rem;margin-right:.28rem;margin-bottom:.28rem;font-weight:500}
+
+.tl{position:relative;padding-left:1.3rem;margin-bottom:1.4rem}
+.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1.5px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:1.1rem;padding-bottom:.1rem}
+.tl-dot{position:absolute;left:-1.3rem;top:4px;width:13px;height:13px;border-radius:50%;border:2px solid var(--blue);background:var(--white);transition:background .15s}
+.tl-item.on .tl-dot{background:var(--blue)}
+.tl-q{font-size:.65rem;font-weight:500;color:var(--blue);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.12rem}
+.tl-title{font-size:.85rem;font-weight:500;color:var(--ink);margin-bottom:.18rem}
+.tl-body{background:var(--surface);border-radius:10px;padding:.65rem .85rem;margin-top:.4rem}
+.tl-body p{font-size:.73rem;color:var(--ink2);line-height:1.5}
+
+.divider{border:none;border-top:0.5px solid rgba(26,60,255,.1);margin:1.4rem 0}
+
+.img-fallback{width:100%;height:200px;background:var(--surface);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:.8rem}
+</style>
+
+<h2 class="sr-only">Mesh × Philips retail growth proposal with photography</h2>
+
+<div class="hero">
+  <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format&fit=crop" alt="Retail store aisle" onerror="this.style.display='none'">
+  <div class="hero-body">
+    <div class="hero-tag"><span class="htdot"></span>Confidential proposal · June 2026</div>
+    <h1 class="hero-h">Your retail opportunity<br>is <span>waiting to be won.</span></h1>
+    <p class="hero-sub">Philips invests in world-class products. Mesh makes sure those products win the moment that matters most — in-store, face to face, with a human story.</p>
+    <div class="hero-logos">
+      <div class="lp">MESH</div>
+      <span class="lp-x">×</span>
+      <div class="lp">PHILIPS</div>
+      <span style="font-size:.68rem;color:rgba(255,255,255,.35);margin-left:.4rem">Prepared by Naiara</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-val">+15%</div><div class="hs-lbl">avg sales lift</div></div>
+      <div class="hs"><div class="hs-val">340+</div><div class="hs-lbl">retail doors</div></div>
+      <div class="hs"><div class="hs-val">180+</div><div class="hs-lbl">ambassadors</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-row" role="tablist">
+  <button class="nb on" onclick="showSec('opp')">The opportunity</button>
+  <button class="nb" onclick="showSec('map')">Coverage map</button>
+  <button class="nb" onclick="showSec('walk')">Store walkthrough</button>
+  <button class="nb" onclick="showSec('how')">How we help</button>
+  <button class="nb" onclick="showSec('road')">Roadmap</button>
+</div>
+
+<div id="opp" class="sec on">
+  <p class="eyebrow">The retail gap</p>
+  <p class="sec-h">Innovation doesn't sell itself.</p>
+  <p class="sec-p">Every day, Philips invests in products that improve lives. Yet the final retail interaction — the one moment where a shopper commits — is the one place Philips is most exposed.</p>
+
+  <div class="img-card">
+    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80&auto=format&fit=crop" alt="Shopper in electronics aisle" onerror="this.style.height='120px';this.style.background='#E8EDFF'">
+    <div class="img-overlay">
+      <h3>The in-store moment determines the sale</h3>
+      <p>68% of purchase decisions are made at the shelf — not online, not at home.</p>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat s-coral"><div class="stat-lbl">Decided in-store</div><div class="stat-val">68%</div><div class="stat-sub">of all purchases</div></div>
+    <div class="stat s-blue"><div class="stat-lbl">Demo sales lift</div><div class="stat-val">+15%</div><div class="stat-sub">avg per store/month</div></div>
+    <div class="stat s-amber"><div class="stat-lbl">Shopper confusion</div><div class="stat-val">41%</div><div class="stat-sub">abandon at shelf</div></div>
+    <div class="stat s-teal"><div class="stat-lbl">ANZ opportunity</div><div class="stat-val">$2.4B</div><div class="stat-sub">addressable market</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-icon ci-blue"><i class="ti ti-users" aria-hidden="true"></i></div>
+      <div class="card-title">Consumer behaviour</div>
+      <div class="card-body">Shoppers research Philips online — then walk into a store and can't remember why they chose Philips over the brand beside it.</div>
+      <div class="card-stat">9 touchpoints → 1 confused moment</div>
+    </div>
+    <div class="card">
+      <div class="card-icon ci-coral"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+      <div class="card-title">Missed opportunity</div>
+      <div class="card-body">Competitors field demonstrators every weekend. Without a professional presence, Philips cedes the most influential moment in the journey.</div>
+      <div class="card-stat">You're losing the conversation</div>
+    </div>
+    <div class="card">
+      <div class="card-icon ci-teal"><i class="ti ti-sparkles" aria-hidden="true"></i></div>
+      <div class="card-title">Why demos work</div>
+      <div class="card-body">A live demonstration answers every objection, communicates value, and creates an emotional connection no shelf label can replicate.</div>
+      <div class="card-stat">10 demos = 15% uplift in NSW</div>
+    </div>
+    <div class="card">
+      <div class="card-icon ci-purple"><i class="ti ti-chart-dots" aria-hidden="true"></i></div>
+      <div class="card-title">Retail challenges</div>
+      <div class="card-body">Shelf proliferation and undertrained staff mean the Philips premium is invisible when it matters most — at the point of decision.</div>
+      <div class="card-stat">Only 12% of staff can demo</div>
+    </div>
+  </div>
+
+  <div class="gap-row">
+    <div class="gap-col gap-bad">
+      <h4>Without Mesh</h4>
+      <ul>
+        <li>Shopper enters alone, unguided</li>
+        <li>Confused by 12+ SKUs on shelf</li>
+        <li>Switches to cheaper competitor</li>
+        <li>Brand story never told</li>
+        <li>Innovation investment wasted</li>
+      </ul>
+    </div>
+    <div class="gap-mid"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+    <div class="gap-col gap-good">
+      <h4>With Mesh</h4>
+      <ul>
+        <li>Expert ambassador greets shopper</li>
+        <li>Product benefits brought to life</li>
+        <li>Objections handled in real time</li>
+        <li>Philips brand story told compellingly</li>
+        <li>Conversion + repurchase up</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="map" class="sec">
+  <p class="eyebrow">Field coverage</p>
+  <p class="sec-h">We're already in your stores.</p>
+  <p class="sec-p">Click any state or region to see active locations, demonstrator reach, and proven results.</p>
+
+  <div class="photo-grid">
+    <div class="photo-cell">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop" alt="Sydney skyline">
+      <div class="photo-label"><span>NSW · Top performer</span><small>58 stores · 640 demos/mo · +15% sales</small></div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80&auto=format&fit=crop" alt="Melbourne city">
+      <div class="photo-label"><span>VIC · Strong performer</span><small>44 stores · 510 demos/mo · +13% uplift</small></div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=600&q=80&auto=format&fit=crop" alt="Brisbane">
+      <div class="photo-label"><span>QLD · Growing</span><small>36 stores · 410 demos/mo · +18% vs no-demo</small></div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=600&q=80&auto=format&fit=crop" alt="New Zealand mountains">
+      <div class="photo-label"><span>New Zealand · Active</span><small>31 stores · 390 demos/mo · +14% JB Hi-Fi</small></div>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <div class="map-tabs">
+      <button class="mtab on" onclick="switchMap('au',this)">Australia</button>
+      <button class="mtab" onclick="switchMap('nz',this)">New Zealand</button>
+    </div>
+    <div style="border-radius:10px;overflow:hidden">
+      <svg id="map-svg" width="100%" viewBox="0 0 640 290" role="img">
+        <title>Mesh field coverage map</title>
+        <desc>Interactive map showing Mesh demonstrator coverage</desc>
+        <rect width="640" height="290" fill="#EEF2FF" rx="8"/>
+        <g id="au-map">
+          <g style="cursor:pointer" onclick="selState('WA')">
+            <rect x="28" y="40" width="155" height="200" rx="6" fill="#DBEAFE" stroke="#1A3CFF" stroke-width="0.5"/>
+            <text x="105" y="138" text-anchor="middle" class="th" fill="#0C447C">WA</text>
+            <text x="105" y="154" text-anchor="middle" class="ts" fill="#185FA5">28 stores</text>
+            <circle cx="105" cy="105" r="5" fill="#1A3CFF" opacity=".7"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('NT')">
+            <rect x="193" y="40" width="116" height="115" rx="6" fill="#F1F0F9" stroke="#8890B0" stroke-width="0.5"/>
+            <text x="251" y="105" text-anchor="middle" class="th" fill="#3C3489">NT</text>
+          </g>
+          <g style="cursor:pointer" onclick="selState('QLD')">
+            <rect x="319" y="40" width="136" height="153" rx="6" fill="#DBEAFE" stroke="#1A3CFF" stroke-width="0.5"/>
+            <text x="387" y="118" text-anchor="middle" class="th" fill="#0C447C">QLD</text>
+            <text x="387" y="134" text-anchor="middle" class="ts" fill="#185FA5">36 stores</text>
+            <circle cx="387" cy="85" r="5" fill="#1A3CFF" opacity=".7"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('SA')">
+            <rect x="193" y="165" width="126" height="75" rx="6" fill="#DBEAFE" stroke="#1A3CFF" stroke-width="0.5"/>
+            <text x="256" y="206" text-anchor="middle" class="th" fill="#0C447C">SA</text>
+            <circle cx="256" cy="190" r="4" fill="#1A3CFF" opacity=".7"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('NSW')">
+            <rect x="393" y="203" width="126" height="72" rx="6" fill="#BBFEE8" stroke="#00C6A0" stroke-width="2"/>
+            <text x="456" y="237" text-anchor="middle" class="th" fill="#085041">NSW</text>
+            <text x="456" y="252" text-anchor="middle" class="ts" fill="#0F6E56">★ Top performer</text>
+            <circle cx="456" cy="222" r="7" fill="#00C6A0" opacity=".9"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('VIC')">
+            <rect x="319" y="203" width="73" height="56" rx="6" fill="#DBEAFE" stroke="#1A3CFF" stroke-width="0.5"/>
+            <text x="355" y="234" text-anchor="middle" class="th" fill="#0C447C">VIC</text>
+            <circle cx="355" cy="220" r="5" fill="#1A3CFF" opacity=".7"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('TAS')">
+            <rect x="333" y="268" width="56" height="18" rx="4" fill="#F1F0F9" stroke="#8890B0" stroke-width="0.5"/>
+            <text x="361" y="281" text-anchor="middle" class="ts" fill="#3C3489">TAS</text>
+          </g>
+        </g>
+        <g id="nz-map" style="display:none">
+          <rect width="640" height="290" fill="#E0FAF5" rx="8"/>
+          <g style="cursor:pointer" onclick="selState('NI')">
+            <rect x="200" y="30" width="210" height="130" rx="6" fill="#BBFEE8" stroke="#00C6A0" stroke-width="0.5"/>
+            <text x="305" y="93" text-anchor="middle" class="th" fill="#085041">North Island</text>
+            <text x="305" y="109" text-anchor="middle" class="ts" fill="#0F6E56">Auckland · Wellington</text>
+            <circle cx="305" cy="62" r="6" fill="#00C6A0" opacity=".85"/>
+          </g>
+          <g style="cursor:pointer" onclick="selState('SI')">
+            <rect x="178" y="172" width="252" height="100" rx="6" fill="#DBEAFE" stroke="#1A3CFF" stroke-width="0.5"/>
+            <text x="304" y="228" text-anchor="middle" class="th" fill="#0C447C">South Island</text>
+            <text x="304" y="244" text-anchor="middle" class="ts" fill="#185FA5">Christchurch · Queenstown</text>
+            <circle cx="304" cy="210" r="5" fill="#1A3CFF" opacity=".7"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="leg">
+      <div class="leg-i"><div class="leg-dot" style="background:#00C6A0"></div>Top zone</div>
+      <div class="leg-i"><div class="leg-dot" style="background:#1A3CFF"></div>Active sites</div>
+      <div class="leg-i"><div class="leg-dot" style="background:#8890B0"></div>Expansion target</div>
+    </div>
+  </div>
+  <div class="hs-panel" id="hs-panel">
+    <p class="hs-body" style="color:var(--ink3);font-size:.77rem">Click any state or region above to see demonstrator coverage and results.</p>
+  </div>
+
+  <div class="divider"></div>
+  <div class="stat-row">
+    <div class="stat s-blue"><div class="stat-lbl">AU states</div><div class="stat-val">6</div><div class="stat-sub">NSW VIC QLD SA WA NT</div></div>
+    <div class="stat s-teal"><div class="stat-lbl">NZ regions</div><div class="stat-val">4</div><div class="stat-sub">AKL WLG CHCH QTN</div></div>
+    <div class="stat s-purple"><div class="stat-lbl">Retail doors</div><div class="stat-val">340+</div><div class="stat-sub">active partner sites</div></div>
+    <div class="stat s-amber"><div class="stat-lbl">Ambassadors</div><div class="stat-val">180+</div><div class="stat-sub">trained field team</div></div>
+  </div>
+</div>
+
+<div id="walk" class="sec">
+  <p class="eyebrow">The Philips store visit</p>
+  <p class="sec-h">From confused to converted.</p>
+  <p class="sec-p">Click each step to see how Mesh transforms the shopper journey — and where the opportunity lies.</p>
+
+  <div id="scene" class="wt-scene" style="background:#EEF2FF">
+    <div class="scene-icon" style="background:#DBEAFE;color:#1A3CFF"><i class="ti ti-door-enter" aria-hidden="true"></i></div>
+    <div class="scene-text" style="color:#0C447C">
+      <h4 style="color:#042C53">Shopper enters the store</h4>
+      <p style="color:#185FA5">A shopper walks into Harvey Norman with a vague idea. They're open, curious — and about to face 14 Philips SKUs with no guidance.</p>
+      <span class="scene-badge" style="background:#DBEAFE;color:#0C447C">Step 1 of 5</span>
+    </div>
+  </div>
+
+  <div class="photo-strip">
+    <div class="photo-strip-cell"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80&auto=format&fit=crop" alt="Store entrance" id="step-img-0"></div>
+    <div class="photo-strip-cell"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=80&auto=format&fit=crop" alt="Product shelf" id="step-img-1"></div>
+    <div class="photo-strip-cell"><img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&q=80&auto=format&fit=crop" alt="Product demonstration" id="step-img-2"></div>
+  </div>
+
+  <div class="wts">
+    <div class="wt on" onclick="selStep(0)">
+      <div class="wt-num">1</div>
+      <div class="wt-txt">
+        <p class="wt-title">Shopper enters the store</p>
+        <p class="wt-detail">Open and curious. The next 90 seconds determine whether they buy Philips or the cheaper brand beside it.</p>
+      </div>
+    </div>
+    <div class="wt" onclick="selStep(1)">
+      <div class="wt-num">2</div>
+      <div class="wt-txt">
+        <p class="wt-title">Sees the product shelf</p>
+        <p class="wt-detail">14 Philips SKUs, no signage differentiating them. The competitor looks louder and cheaper in all the wrong ways.</p>
+      </div>
+    </div>
+    <div class="wt" onclick="selStep(2)">
+      <div class="wt-num">3</div>
+      <div class="wt-txt">
+        <p class="wt-title">Decision paralysis sets in</p>
+        <p class="wt-detail">41% of shoppers abandon the category when there's no guidance. This is the moment Philips most needs a human voice.</p>
+      </div>
+    </div>
+    <div class="wt" onclick="selStep(3)">
+      <div class="wt-num">4</div>
+      <div class="wt-txt">
+        <p class="wt-title">Mesh demonstrator engages</p>
+        <p class="wt-detail">A trained Mesh ambassador steps in — demonstrating, storytelling, answering every objection with energy and expertise.</p>
+      </div>
+    </div>
+    <div class="wt" onclick="selStep(4)">
+      <div class="wt-num">5</div>
+      <div class="wt-txt">
+        <p class="wt-title">Converts to purchase</p>
+        <p class="wt-detail">Shopper buys Philips with confidence. They know why it's worth the premium — and they'll be back.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="how" class="sec">
+  <p class="eyebrow">What Mesh brings</p>
+  <p class="sec-h">Built for Philips. Focused on results.</p>
+  <p class="sec-p">We don't just put people in stores. We bring a complete retail activation system — people, data, and continuous optimisation.</p>
+
+  <div class="img-card">
+    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&q=80&auto=format&fit=crop" alt="Team working together">
+    <div class="img-overlay">
+      <h3>A dedicated Philips retail team</h3>
+      <p>From brand immersion to weekly redeployment — every detail handled by Mesh.</p>
+    </div>
+  </div>
+
+  <div class="ptabs">
+    <button class="ptab on" onclick="setPil(this,'field')">Field team</button>
+    <button class="ptab" onclick="setPil(this,'dash')">Live dashboard</button>
+    <button class="ptab" onclick="setPil(this,'train')">Brand training</button>
+    <button class="ptab" onclick="setPil(this,'grow')">Growth engine</button>
+  </div>
+  <div class="pbody" id="pil-wrap">
+    <div id="pil-field">
+      <h4>180+ trained Philips brand ambassadors</h4>
+      <p>Philips-certified category experts deployed at peak traffic, in the stores that matter most. They represent your brand — no one else's — that weekend.</p>
+      <div><span class="tag">Product-certified</span><span class="tag">Objection-trained</span><span class="tag">Weekend presence</span><span class="tag">Consistent brand voice</span></div>
+    </div>
+    <div id="pil-dash" style="display:none">
+      <h4>Real-time Philips performance dashboard</h4>
+      <p>Every demo, every conversion, every store — tracked live. See which SKUs convert, which stores outperform, and where to shift resource next week — not next quarter.</p>
+      <div><span class="tag">Demo-to-sale tracking</span><span class="tag">Store-level ROI</span><span class="tag">SKU performance</span><span class="tag">Weekly reporting</span></div>
+    </div>
+    <div id="pil-train" style="display:none">
+      <h4>Deep Philips brand immersion</h4>
+      <p>Every Mesh ambassador completes a full Philips immersion — product tech, brand values, category positioning, and objection handling. They believe in what they're selling.</p>
+      <div><span class="tag">Philips tech training</span><span class="tag">Competitor comparison</span><span class="tag">Brand storytelling</span><span class="tag">Customer profiling</span></div>
+    </div>
+    <div id="pil-grow" style="display:none">
+      <h4>Continuous optimisation — not set and forget</h4>
+      <p>Weekly sales data drives redeployment. Teams briefed on new competition in real time. QBRs with Philips leadership keep strategy aligned to results.</p>
+      <div><span class="tag">Weekly redeployment</span><span class="tag">Competitor alerts</span><span class="tag">QBR with Philips</span><span class="tag">Annual planning</span></div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat s-teal"><div class="stat-lbl">Avg sales uplift</div><div class="stat-val">+15%</div><div class="stat-sub">10+ demos/store/month</div></div>
+    <div class="stat s-blue"><div class="stat-lbl">Repurchase rate</div><div class="stat-val">+28%</div><div class="stat-sub">demo-converted customers</div></div>
+    <div class="stat s-purple"><div class="stat-lbl">Demo NPS</div><div class="stat-val">72</div><div class="stat-sub">vs 41 category average</div></div>
+  </div>
+</div>
+
+<div id="road" class="sec">
+  <p class="eyebrow">12-month roadmap</p>
+  <p class="sec-h">From kickoff to growth engine running.</p>
+  <p class="sec-p">Click each phase to expand the detail.</p>
+
+  <div class="img-card">
+    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Planning and strategy session">
+    <div class="img-overlay">
+      <h3>A structured path to full activation</h3>
+      <p>Four phases. First results within 90 days. Full engine live by Q2 2027.</p>
+    </div>
+  </div>
+
+  <div class="tl" id="tl">
+    <div class="tl-item on" onclick="tlToggle(this)">
+      <div class="tl-dot"></div>
+      <p class="tl-q">Q3 2026 · Months 1–3</p>
+      <p class="tl-title">Foundation & discovery</p>
+      <div class="tl-body"><p>Deep-dive into category data, retailer relationships, and existing shopper research. Baseline metrics established. Stakeholder alignment across Philips commercial, brand, and digital teams. Roadmap finalised.</p></div>
+    </div>
+    <div class="tl-item" onclick="tlToggle(this)">
+      <div class="tl-dot"></div>
+      <p class="tl-q">Q4 2026 · Months 4–6</p>
+      <p class="tl-title">Pilot activations</p>
+      <div class="tl-body" style="display:none"><p>Three retail partners selected for initial activation pilots. In-store and digital shelf executions live. First learnings captured and fed back into the wider playbook. Early ROI signals reported.</p></div>
+    </div>
+    <div class="tl-item" onclick="tlToggle(this)">
+      <div class="tl-dot"></div>
+      <p class="tl-q">Q1 2027 · Months 7–9</p>
+      <p class="tl-title">Scale & optimise</p>
+      <div class="tl-body" style="display:none"><p>Winning executions rolled out to full account list. Budget reallocated based on pilot results. Retailer media investments scaled. Shopper content library built and deployed across channels.</p></div>
+    </div>
+    <div class="tl-item" onclick="tlToggle(this)">
+      <div class="tl-dot"></div>
+      <p class="tl-q">Q2 2027 · Months 10–12</p>
+      <p class="tl-title">Full growth engine live</p>
+      <div class="tl-body" style="display:none"><p>All accounts active, full performance dashboards live, annual planning cycle begins for 2028. Annual review with Philips leadership. Partnership renewal and scope expansion discussed.</p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var stateData={
+  WA:{n:'Western Australia',s:'28 stores · 320 demos/month',r:'WA activations delivered a 12% sales uplift across JB Hi-Fi and Harvey Norman in H1 2026.'},
+  NT:{n:'Northern Territory',s:'6 stores · 80 demos/month',r:'NT is an expansion target. Opportunity with Harvey Norman Darwin.'},
+  QLD:{n:'Queensland',s:'36 stores · 410 demos/month',r:'QLD is our second-largest market. Rebel Sport Gold Coast outperformed category by 18%.'},
+  SA:{n:'South Australia',s:'14 stores · 190 demos/month',r:'SA pilot with The Good Guys delivered 11% uplift in oral care within 60 days.'},
+  NSW:{n:'New South Wales ★',s:'58 stores · 640 demos/month',r:'NSW is our strongest market. 10 demos/month = 15% sales increase. Biggest scale opportunity.'},
+  VIC:{n:'Victoria',s:'44 stores · 510 demos/month',r:'VIC across Harvey Norman, JB Hi-Fi and Chemist Warehouse delivered consistent 13% uplift.'},
+  TAS:{n:'Tasmania',s:'4 stores · 40 demos/month',r:'TAS is a micro-market — niche activation opportunity.'},
+  NI:{n:'North Island, New Zealand',s:'22 stores · 280 demos/month',r:'Auckland and Wellington anchor our NZ presence. JB Hi-Fi NZ up 14% vs non-demo stores in Q1.'},
+  SI:{n:'South Island, New Zealand',s:'9 stores · 110 demos/month',r:'Christchurch and Queenstown — Noel Leeming partnership active and expanding.'}
+};
+var stepData=[
+  {bg:'#EEF2FF',ib:'#DBEAFE',ic:'#1A3CFF',icon:'ti-door-enter',tc:'#042C53',bc:'#185FA5',title:'Shopper enters the store',body:'A shopper walks into Harvey Norman with a vague idea. Open, curious — and about to face 14 Philips SKUs with no guidance.',badge:'Step 1 of 5',bb:'#DBEAFE',btc:'#0C447C'},
+  {bg:'#FFF8E0',ib:'#FAEEDA',ic:'#854F0B',icon:'ti-eye',tc:'#412402',bc:'#854F0B',title:'Sees the product shelf',body:'14 Philips SKUs. No signage that differentiates them. The competitor\'s packaging catches the eye first.',badge:'Step 2 of 5',bb:'#FAEEDA',btc:'#633806'},
+  {bg:'#FFF0EE',ib:'#FCEBEB',ic:'#FF5C4D',icon:'ti-mood-confuzed',tc:'#4A1B0C',bc:'#993C1D',title:'Decision paralysis sets in',body:'41% of shoppers abandon a category when there\'s no guidance. This is the moment Philips most needs a human voice.',badge:'Step 3 of 5 · The crisis moment',bb:'#FCEBEB',btc:'#791F1F'},
+  {bg:'#F0ECFF',ib:'#EEEDFE',ic:'#7B5CF0',icon:'ti-sparkles',tc:'#26215C',bc:'#534AB7',title:'Mesh demonstrator engages',body:'A trained Mesh brand ambassador steps in. They demonstrate the product, answer every objection, and tell the Philips story with energy.',badge:'Step 4 of 5 · The turning point',bb:'#EEEDFE',btc:'#3C3489'},
+  {bg:'#E0FAF5',ib:'#BBFEE8',ic:'#00C6A0',icon:'ti-shopping-cart',tc:'#04342C',bc:'#0F6E56',title:'Converts to purchase',body:'Shopper buys Philips with confidence. They know why it\'s worth the premium — and they\'ll be back.',badge:'Step 5 of 5 · Revenue won.',bb:'#BBFEE8',btc:'#085041'}
+];
+function showSec(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function switchMap(m,btn){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('au-map').style.display=m==='au'?'block':'none';
+  document.getElementById('nz-map').style.display=m==='nz'?'block':'none';
+  document.getElementById('hs-panel').innerHTML='<p class="hs-body" style="color:var(--ink3);font-size:.77rem">Click a region above to see coverage details.</p>';
+}
+function selState(code){
+  var d=stateData[code];if(!d)return;
+  document.getElementById('hs-panel').innerHTML='<p class="hs-name">'+d.n+'</p><p class="hs-body">'+d.s+'</p><p class="hs-result"><i class="ti ti-chart-line" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>'+d.r+'</p>';
+}
+function selStep(i){
+  document.querySelectorAll('.wt').forEach((w,j)=>w.classList.toggle('on',j===i));
+  var d=stepData[i];
+  document.getElementById('scene').style.background=d.bg;
+  document.getElementById('scene').innerHTML='<div class="scene-icon" style="background:'+d.ib+';color:'+d.ic+'"><i class="ti '+d.icon+'" aria-hidden="true"></i></div><div class="scene-text"><h4 style="color:'+d.tc+'">'+d.title+'</h4><p style="color:'+d.bc+'">'+d.body+'</p><span class="scene-badge" style="background:'+d.bb+';color:'+d.btc+'">'+d.badge+'</span></div>';
+}
+function setPil(btn,id){
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('#pil-wrap > div').forEach(d=>d.style.display='none');
+  document.getElementById('pil-'+id).style.display='block';
+}
+function tlToggle(el){
+  var body=el.querySelector('.tl-body');
+  var isOpen=body.style.display!=='none'&&body.style.display!=='';
+  el.classList.toggle('on',!isOpen);
+  body.style.display=isOpen?'none':'block';
+}
+</script>
